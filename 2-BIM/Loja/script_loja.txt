@@ -1,0 +1,600 @@
+Microsoft Windows [versão 6.3.9600]
+(c) 2013 Microsoft Corporation. Todos os direitos reservados.
+
+DDL
+
+C:\Users\ETEC>color a
+
+C:\Users\ETEC>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>show database
+'show' não é reconhecido como um comando interno
+ou externo, um programa operável ou um arquivo em lotes.
+
+C:\xampp\mysql\bin> mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 73
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show database
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near 'dat
+abase' at line 1
+MariaDB [(none)]> show database
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near 'dat
+abase' at line 1
+MariaDB [(none)]> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| produtos           |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> use produtos
+Database changed
+MariaDB [produtos]> describe produto
+    -> ;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| qtde         | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.049 sec)
+
+MariaDB [produtos]> describe categoria;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
+| descricao   | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.029 sec)
+
+MariaDB [produtos]> alter table categoria drop column descricao
+    -> ;
+Query OK, 0 rows affected (0.073 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe categoria
+    -> ;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.030 sec)
+
+MariaDB [produtos]> alter table categoria add descricao varchar(255) null;
+Query OK, 0 rows affected (0.078 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe categoria
+    -> ;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
+| descricao   | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.048 sec)
+
+MariaDB [produtos]> describe produto
+    -> ;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| qtde         | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.066 sec)
+
+MariaDB [produtos]> alter table produto datacadastro datacad date not null
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near 'dat
+acad date not null' at line 1
+MariaDB [produtos]> alter table produto change datacadastro date not null
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near 'not
+ null' at line 1
+MariaDB [produtos]> alter table produto change datacadastro datacad date not nul
+l
+    -> ;
+Query OK, 0 rows affected (0.067 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe produto
+    -> ;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| idproduto   | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto | varchar(100)  | NO   |     | NULL    |                |
+| preco       | decimal(10,2) | NO   |     | NULL    |                |
+| qtde        | int(11)       | NO   |     | NULL    |                |
+| datacad     | date          | NO   |     | NULL    |                |
+| ativo       | bit(1)        | NO   |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.049 sec)
+
+DML 
+
+
+C:\Users\ETEC>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 110
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use produtos
+Database changed
+MariaDB [produtos]> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| produtos           |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [produtos]> describe produto
+    -> ;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| qtde         | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.250 sec)
+
+MariaDB [produtos]> rename table produto to product
+    -> ;
+Query OK, 0 rows affected (0.930 sec)
+
+MariaDB [produtos]> describe product
+    -> ;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| qtde         | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.324 sec)
+
+Microsoft Windows [versão 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation. Todos os direitos reservados.
+
+C:\Users\Biscoitos Luluka>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 46
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use produtos
+Database changed
+MariaDB [produtos]> INSERT INTO categoria (categoria, descricao) VALUES('Eletrôn
+ico', 'Aparelhos eletrônicos, câmeras, tablets, notebooks e computadores'),('Lim
+peza', 'Produtos e itens para limpeza'),('Decoração', 'Itens para decoração'),('
+Alimentos', 'Itens alimentícios para consumo'),('Congelados', 'Itens congelados
+para consumo');
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe categoriaselect * from categoria
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near '* f
+rom categoria' at line 1
+MariaDB [produtos]> select*from categoria
+    -> ;
++-------------+------------+----------------------------------------------------
+---------------+
+| idcategoria | categoria  | descricao
+               |
++-------------+------------+----------------------------------------------------
+---------------+
+|           1 | Eletrônico | Aparelhos eletrônicos, câmeras, tablets, notebooks
+e computadores |
+|           2 | Limpeza    | Produtos e itens para limpeza
+               |
+|           3 | Decoração  | Itens para decoração
+               |
+|           4 | Alimentos  | Itens alimentícios para consumo
+               |
+|           5 | Congelados | Itens congelados para consumo
+               |
++-------------+------------+----------------------------------------------------
+---------------+
+5 rows in set (0.001 sec)
+
+MariaDB [produtos]> INSERT INTO product
+    -> (idcategoria, nomeproduto, preco, qtde, datacadastro, ativo)
+    -> VALUES
+    -> (1, 'Mouse Gamer', 89.90, 20, '2026-01-12', 1),
+    -> (1, 'Teclado Mecânico', 199.90, 4, '2026-02-05', 1),
+    -> (1, 'Monitor 24 Polegadas', 899.90, 2, '2026-03-18', 1),
+    ->
+    -> (2, 'Shampoo', 18.90, 2, '2026-01-25', 1),
+    -> (2, 'Sabonete Líquido', 9.90, 7, '2026-02-14', 1),
+    -> (2, 'Creme Dental', 6.50, 3, '2026-04-02', 1),
+    ->
+    -> (3, 'Vaso de Planta', 35.90, 1, '2026-03-01', 1),
+    -> (3, 'Pá de Jardim', 24.90, 10, '2026-03-22', 1),
+    -> (3, 'Mangueira', 59.90, 1, '2026-05-10', 1),
+    ->
+    -> (4, 'Refrigerante', 8.99, 3, '2026-01-30', 1),
+    -> (4, 'Suco de Uva', 12.90, 2, '2026-04-18', 1),
+    -> (4, 'Água Mineral', 2.50, 7, '2026-05-05', 1),
+    ->
+    -> (5, 'Bola de Futebol', 79.90, 10, '2026-02-28', 1),
+    -> (5, 'Corda de Pular', 19.90, 1, '2026-04-25', 1),
+    -> (5, 'Luva de Goleiro', 49.90, 1, '2026-05-28', 1);
+Query OK, 15 rows affected (0.010 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> select*from products
+    -> ;
+ERROR 1146 (42S02): Table 'produtos.products' doesn't exist
+MariaDB [produtos]> select from product
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near 'fro
+m product' at line 1
+MariaDB [produtos]> select*from product
+    -> ;
++-----------+-------------+----------------------+--------+------+--------------
++-------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro
+| ativo |
++-----------+-------------+----------------------+--------+------+--------------
++-------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12
+| ?     |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05
+| ?     |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18
+| ?     |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25
+| ?     |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14
+| ?     |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02
+| ?     |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01
+| ?     |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22
+| ?     |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10
+| ?     |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30
+| ?     |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18
+| ?     |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05
+| ?     |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28
+| ?     |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25
+| ?     |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28
+| ?     |
++-----------+-------------+----------------------+--------+------+--------------
++-------+
+15 rows in set (0.001 sec)
+
+
+C:\Users\ETEC>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u produtos
+ERROR 1045 (28000): Access denied for user 'produtos'@'localhost' (using password: NO)
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 51
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use produtos
+Database changed
+MariaDB [produtos]> select * from product
+    -> ;
++-----------+-------------+----------------------+--------+------+--------------+-------+-------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro | ativo | marca |
++-----------+-------------+----------------------+--------+------+--------------+-------+-------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12   | ?     |       |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05   | ?     |       |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18   | ?     |       |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25   | ?     |       |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14   | ?     |       |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02   | ?     |       |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01   | ?     |       |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22   | ?     |       |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10   | ?     |       |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30   | ?     |       |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18   | ?     |       |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05   | ?     |       |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28   | ?     |       |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25   | ?     |       |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28   | ?     |       |
++-----------+-------------+----------------------+--------+------+--------------+-------+-------+
+15 rows in set (0.000 sec)
+
+MariaDB [produtos]> update product set marca = mancer where idproduto = 1;
+ERROR 1054 (42S22): Unknown column 'mancer' in 'field list'
+MariaDB [produtos]> select * from product
+    -> ;
++-----------+-------------+----------------------+--------+------+--------------+-------+-------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro | ativo | marca |
++-----------+-------------+----------------------+--------+------+--------------+-------+-------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12   | ?     |       |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05   | ?     |       |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18   | ?     |       |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25   | ?     |       |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14   | ?     |       |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02   | ?     |       |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01   | ?     |       |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22   | ?     |       |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10   | ?     |       |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30   | ?     |       |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18   | ?     |       |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05   | ?     |       |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28   | ?     |       |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25   | ?     |       |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28   | ?     |       |
++-----------+-------------+----------------------+--------+------+--------------+-------+-------+
+15 rows in set (0.000 sec)
+
+MariaDB [produtos]> update product set marca = 'mancer' where idproduto = 1;
+Query OK, 1 row affected (0.030 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> select * from product
+    -> ;
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro | ativo | marca  |
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12   | ?     | mancer |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05   | ?     |        |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18   | ?     |        |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25   | ?     |        |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14   | ?     |        |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02   | ?     |        |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01   | ?     |        |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22   | ?     |        |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10   | ?     |        |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30   | ?     |        |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18   | ?     |        |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05   | ?     |        |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28   | ?     |        |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25   | ?     |        |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28   | ?     |        |
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+15 rows in set (0.000 sec)
+
+MariaDB [produtos]> update product set marca = 'rayzer' where idproduto = 2;
+Query OK, 1 row affected (0.437 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> select * from product
+    -> ;
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro | ativo | marca  |
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12   | ?     | mancer |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05   | ?     | rayzer |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18   | ?     |        |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25   | ?     |        |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14   | ?     |        |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02   | ?     |        |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01   | ?     |        |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22   | ?     |        |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10   | ?     |        |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30   | ?     |        |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18   | ?     |        |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05   | ?     |        |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28   | ?     |        |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25   | ?     |        |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28   | ?     |        |
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+15 rows in set (0.002 sec)
+
+MariaDB [produtos]> update product set marca = 'acer' where idproduto = 3;
+Query OK, 1 row affected (0.030 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> select * from product;
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro | ativo | marca  |
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12   | ?     | mancer |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05   | ?     | rayzer |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18   | ?     | acer   |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25   | ?     |        |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14   | ?     |        |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02   | ?     |        |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01   | ?     |        |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22   | ?     |        |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10   | ?     |        |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30   | ?     |        |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18   | ?     |        |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05   | ?     |        |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28   | ?     |        |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25   | ?     |        |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28   | ?     |        |
++-----------+-------------+----------------------+--------+------+--------------+-------+--------+
+15 rows in set (0.000 sec)
+
+MariaDB [produtos]> update product set marca = 'clear man' where idproduto = 4;
+Query OK, 1 row affected (0.060 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'palmolive' where idproduto = 5;
+Query OK, 1 row affected (0.027 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'colgate' where idproduto = 6;
+Query OK, 1 row affected (0.025 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> select * from product;
++-----------+-------------+----------------------+--------+------+--------------+-------+-----------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro | ativo | marca     |
++-----------+-------------+----------------------+--------+------+--------------+-------+-----------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12   | ?     | mancer    |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05   | ?     | rayzer    |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18   | ?     | acer      |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25   | ?     | clear man |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14   | ?     | palmolive |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02   | ?     | colgate   |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01   | ?     |           |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22   | ?     |           |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10   | ?     |           |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30   | ?     |           |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18   | ?     |           |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05   | ?     |           |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28   | ?     |           |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25   | ?     |           |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28   | ?     |           |
++-----------+-------------+----------------------+--------+------+--------------+-------+-----------+
+15 rows in set (0.000 sec)
+
+MariaDB [produtos]> update product set marca = 'ts-brasil' where idproduto = 7;
+Query OK, 1 row affected (0.025 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'tramontina' where idproduto = 8;
+Query OK, 1 row affected (0.551 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'tramontina' where idproduto = 9;
+Query OK, 1 row affected (0.531 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'x-tapa' where idproduto = 10;
+Query OK, 1 row affected (0.023 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> select * from product;
++-----------+-------------+----------------------+--------+------+--------------+-------+------------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro | ativo | marca      |
++-----------+-------------+----------------------+--------+------+--------------+-------+------------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12   | ?     | mancer     |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05   | ?     | rayzer     |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18   | ?     | acer       |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25   | ?     | clear man  |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14   | ?     | palmolive  |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02   | ?     | colgate    |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01   | ?     | ts-brasil  |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22   | ?     | tramontina |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10   | ?     | tramontina |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30   | ?     | x-tapa     |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18   | ?     |            |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05   | ?     |            |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28   | ?     |            |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25   | ?     |            |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28   | ?     |            |
++-----------+-------------+----------------------+--------+------+--------------+-------+------------+
+15 rows in set (0.000 sec)
+
+MariaDB [produtos]> update product set marca = 'maráta' where idproduto = 11;
+Query OK, 1 row affected (0.025 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'Crystal' where idproduto = 12;
+Query OK, 1 row affected (0.090 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'Adidas' where idproduto = 13;
+Query OK, 1 row affected (0.033 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'vollo' where idproduto = 14;
+Query OK, 1 row affected (0.482 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> update product set marca = 'nike' where idproduto = 15;
+Query OK, 1 row affected (0.013 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> select * from product;
++-----------+-------------+----------------------+--------+------+--------------+-------+------------+
+| idproduto | idcategoria | nomeproduto          | preco  | qtde | datacadastro | ativo | marca      |
++-----------+-------------+----------------------+--------+------+--------------+-------+------------+
+|         1 |           1 | Mouse Gamer          |  89.90 |   20 | 2026-01-12   | ?     | mancer     |
+|         2 |           1 | Teclado Mecânico     | 199.90 |    4 | 2026-02-05   | ?     | rayzer     |
+|         3 |           1 | Monitor 24 Polegadas | 899.90 |    2 | 2026-03-18   | ?     | acer       |
+|         4 |           2 | Shampoo              |  18.90 |    2 | 2026-01-25   | ?     | clear man  |
+|         5 |           2 | Sabonete Líquido     |   9.90 |    7 | 2026-02-14   | ?     | palmolive  |
+|         6 |           2 | Creme Dental         |   6.50 |    3 | 2026-04-02   | ?     | colgate    |
+|         7 |           3 | Vaso de Planta       |  35.90 |    1 | 2026-03-01   | ?     | ts-brasil  |
+|         8 |           3 | Pá de Jardim         |  24.90 |   10 | 2026-03-22   | ?     | tramontina |
+|         9 |           3 | Mangueira            |  59.90 |    1 | 2026-05-10   | ?     | tramontina |
+|        10 |           4 | Refrigerante         |   8.99 |    3 | 2026-01-30   | ?     | x-tapa     |
+|        11 |           4 | Suco de Uva          |  12.90 |    2 | 2026-04-18   | ?     | maráta     |
+|        12 |           4 | Água Mineral         |   2.50 |    7 | 2026-05-05   | ?     | Crystal    |
+|        13 |           5 | Bola de Futebol      |  79.90 |   10 | 2026-02-28   | ?     | Adidas     |
+|        14 |           5 | Corda de Pular       |  19.90 |    1 | 2026-04-25   | ?     | vollo      |
+|        15 |           5 | Luva de Goleiro      |  49.90 |    1 | 2026-05-28   | ?     | nike       |
++-----------+-------------+----------------------+--------+------+--------------+-------+------------+
+15 rows in set (0.000 sec)
+
+MariaDB [produtos]>
+
